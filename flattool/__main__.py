@@ -172,8 +172,8 @@ def search(
                 print(f"Unexpected error: {e}")
                 sys.exit(1)
         else:
-            confirm = input(f"Install '{app_name}' ({app_id})? (y/n): ")
-            if confirm.strip().lower().startswith("y"):
+            confirm = input(f"Install '{app_name}' ({app_id})? (Y/n): ")
+            if not confirm.strip().lower().startswith("n"):
                 try:
                     os.execvp("flatpak", ["flatpak", "install", "-y", app_id])
                 except FileNotFoundError:

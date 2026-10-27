@@ -141,8 +141,8 @@ def run_uninstall(filter_term: str = "", assume_yes: bool = False):
                 print(f"Unexpected error: {e}")
                 sys.exit(1)
         else:
-            confirm = input(f"Uninstall '{app_name}' ({app_id})? (y/n): ")
-            if confirm.strip().lower().startswith("y"):
+            confirm = input(f"Uninstall '{app_name}' ({app_id})? (Y/n): ")
+            if not confirm.strip().lower().startswith("n"):
                 try:
                     os.execvp("flatpak", ["flatpak", "uninstall", "-y", app_id])
                 except FileNotFoundError:

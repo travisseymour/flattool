@@ -21,7 +21,7 @@ Search for flatpak apps and optionally install a selected one.
 flattool search comic
 ```
 
-This will prompt you to verify before installing any app you choose.
+This will prompt you to verify before installing any app you choose. Press Enter to confirm (defaults to yes) or type "n" to cancel.
 
 ```bash
 flattool search -y comic
@@ -35,13 +35,13 @@ With `-y`, flatpak will start installing immediately without confirmation.
 flattool list [filter term]
 ```
 
-Display installed flatpak apps. Select one to launch it.
+Display installed flatpak apps, sorted alphabetically. Select one to launch it.
 
 ```bash
 flattool list
 ```
 
-Shows all installed flatpak apps in a table. Select one to launch.
+Shows all installed flatpak apps in a table, sorted alphabetically by name. Select one to launch.
 
 ```bash
 flattool list firefox
@@ -55,13 +55,13 @@ Filter the list to show only apps matching "firefox".
 flattool uninstall [-y|--assumeyes] [filter term]
 ```
 
-Display installed flatpak apps and uninstall a selected one.
+Display installed flatpak apps, sorted alphabetically, and uninstall a selected one.
 
 ```bash
 flattool uninstall
 ```
 
-Shows all installed flatpak apps in a table. Select one to uninstall.
+Shows all installed flatpak apps in a table, sorted alphabetically by name. Select one to uninstall. Press Enter to confirm (defaults to yes) or type "n" to cancel.
 
 ```bash
 flattool uninstall firefox
