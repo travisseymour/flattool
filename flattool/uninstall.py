@@ -1,17 +1,17 @@
-#!/usr/bin/env python3
 # SPDX-FileCopyrightText: FlatTool | Copyright (c) 2025 Travis L. Seymour, PhD <nogard@ucsc.edu>
 # SPDX-License-Identifier: GPL-3.0-or-later
 """
 FlatTool Uninstall Module. Provides a Textual TUI for uninstalling Flatpak applications.
 """
 
+import asyncio
 import os
 import sys
-import asyncio
+from typing import ClassVar
 
 from textual.app import App, ComposeResult
-from textual.widgets import Header, Footer, DataTable
 from textual.events import Key
+from textual.widgets import DataTable, Footer, Header
 
 from flattool.version import get_version
 
@@ -19,7 +19,7 @@ from flattool.version import get_version
 class FlatUninstallApp(App):
     """Textual app for displaying and selecting installed Flatpak apps for uninstallation."""
 
-    BINDINGS = [("q", "quit", "Quit"), ("escape", "quit", "Quit")]
+    BINDINGS: ClassVar[list] = [("q", "quit", "Quit"), ("escape", "quit", "Quit")]
 
     def __init__(self, filter_term: str = "", read_only: bool = False, **kwargs):
         super().__init__(**kwargs)
@@ -50,7 +50,7 @@ class FlatUninstallApp(App):
         )
         try:
             stdout, stderr = await asyncio.wait_for(process.communicate(), timeout=30.0)
-        except asyncio.TimeoutError:
+        except TimeoutError:
             process.kill()
             self.exit(message="Error: flatpak list timed out after 30 seconds.")
             return
@@ -163,7 +163,7 @@ def run_list(filter_term: str = ""):
     app.run()
 
     if app.selected_app is not None:
-        _, app_name, app_id, _, _ = app.selected_app
+        _, _, app_id, _, _ = app.selected_app
         try:
             os.execvp("flatpak", ["flatpak", "run", app_id])
         except FileNotFoundError:

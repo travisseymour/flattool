@@ -4,26 +4,26 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "flattool"
-version = "2026.10.26.1"
+version = "2026.10.26.2"
 description="FlatTool - A Textual-based TUI for searching, installing, listing, launching, and uninstalling Flatpak apps."
 authors = [{ name = "Travis L. Seymour, PhD", email = "nogard@ucsc.edu" }]
 license = { file = "LICENSE" }
 readme = "README.md"
-requires-python = ">=3.10,<3.14"
+requires-python = ">=3.11,<3.15"
 keywords = ["flatpak", "linux", "installation", "utility", "utilities", "software"]
 classifiers = [
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
     "Operating System :: OS Independent"
 ]
 dependencies = [
     "rich>=13.9.4",
     "textual>=1.0.0",
-    "typer>=0.12.0"
+    "cyclopts>=3.0.0"
 ]
 
 [project.urls]
@@ -59,4 +59,4 @@ line-length = 120
 
 [tool.ruff]
 line-length = 120
-lint.ignore = ["F821", "F841", "E722"]  # undefined name, assigned but unused variable, bare except
+lint.ignore = ["F821", "F841", "E722", "BLE001"]  # undefined name, assigned but unused variable, bare except, blind exception

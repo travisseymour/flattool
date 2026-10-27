@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # SPDX-FileCopyrightText: FlatTool | Copyright (c) 2025 Travis L. Seymour, PhD <nogard@ucsc.edu>
 # SPDX-License-Identifier: GPL-3.0-or-later
 """
@@ -7,27 +6,26 @@ table of search results from [flatpak](https://flatpak.org/).
 Use the arrow keys to select an entry and press ENTER to be prompted for installation.
 """
 
+import asyncio
 import os
 import sys
-import asyncio
-from typing import Optional
+from typing import Annotated, ClassVar
 
-import typer
+import cyclopts
 from textual.app import App, ComposeResult
-from textual.widgets import Header, Footer, DataTable
 from textual.events import Key
+from textual.widgets import DataTable, Footer, Header
 
+from flattool.uninstall import run_list, run_uninstall
 from flattool.version import get_version
-from flattool.uninstall import run_uninstall, run_list
 
-cli = typer.Typer(
-    help="FlatSearch - Search and install/uninstall Flatpak applications via TUI.",
-    add_completion=False,
+app = cyclopts.App(
+    help="FlatTool - Search and install/uninstall Flatpak applications via TUI.",
 )
 
 
 class FlatSearchApp(App):
-    BINDINGS = [("q", "quit", "Quit"), ("escape", "quit", "Quit")]
+    BINDINGS: ClassVar[list] = [("q", "quit", "Quit"), ("escape", "quit", "Quit")]
 
     def __init__(self, search_term: str, **kwargs):
         super().__init__(**kwargs)
@@ -54,7 +52,7 @@ class FlatSearchApp(App):
         )
         try:
             stdout, stderr = await asyncio.wait_for(process.communicate(), timeout=30.0)
-        except asyncio.TimeoutError:
+        except TimeoutError:
             process.kill()
             self.exit(message="Error: flatpak search timed out after 30 seconds.")
             return
@@ -108,42 +106,62 @@ class FlatSearchApp(App):
             self.exit()
 
 
-@cli.command()
+@app.command()
 def uninstall(
-    filter_term: Optional[list[str]] = typer.Argument(
-        None, help="Optional filter to match installed app names or IDs."
-    ),
-    assumeyes: bool = typer.Option(False, "-y", "--assumeyes", help="Assume 'yes' for uninstallation prompts."),
+    filter_term: list[str] | None = None,
+    *,
+    assumeyes: Annotated[bool, cyclopts.Parameter(("-y", "--assumeyes"))] = False,
 ) -> None:
-    """Uninstall a Flatpak application via TUI."""
+    """Uninstall a Flatpak application via TUI.
+
+    Parameters
+    ----------
+    filter_term
+        Optional filter to match installed app names or IDs.
+    assumeyes
+        Assume 'yes' for uninstallation prompts.
+    """
     filter_str = " ".join(filter_term) if filter_term else ""
     run_uninstall(filter_str, assumeyes)
 
 
-@cli.command("list")
+@app.command(name="list")
 def list_apps(
-    filter_term: Optional[list[str]] = typer.Argument(
-        None, help="Optional filter to match installed app names or IDs."
-    ),
+    filter_term: list[str] | None = None,
 ) -> None:
-    """List installed Flatpak applications and optionally launch one."""
+    """List installed Flatpak applications and optionally launch one.
+
+    Parameters
+    ----------
+    filter_term
+        Optional filter to match installed app names or IDs.
+    """
     filter_str = " ".join(filter_term) if filter_term else ""
     run_list(filter_str)
 
 
-@cli.command()
+@app.command()
 def search(
-    search_terms: list[str] = typer.Argument(..., help="Search term(s) passed to 'flatpak search'."),
-    assumeyes: bool = typer.Option(False, "-y", "--assumeyes", help="Assume 'yes' for installation prompts."),
+    search_terms: list[str],
+    *,
+    assumeyes: Annotated[bool, cyclopts.Parameter(("-y", "--assumeyes"))] = False,
 ) -> None:
-    """Search and install Flatpak applications via TUI."""
+    """Search and install Flatpak applications via TUI.
+
+    Parameters
+    ----------
+    search_terms
+        Search term(s) passed to 'flatpak search'.
+    assumeyes
+        Assume 'yes' for installation prompts.
+    """
     search_term = " ".join(search_terms)
 
-    app = FlatSearchApp(search_term)
-    app.run()
+    tui = FlatSearchApp(search_term)
+    tui.run()
 
-    if app.selected_app is not None:
-        _, app_name, _, app_id, _ = app.selected_app
+    if tui.selected_app is not None:
+        _, app_name, _, app_id, _ = tui.selected_app
         if assumeyes:
             try:
                 os.execvp("flatpak", ["flatpak", "install", "-y", app_id])
@@ -172,7 +190,7 @@ def search(
 
 def main() -> None:
     """Entry point for the CLI."""
-    cli()
+    app()
 
 
 if __name__ == "__main__":
