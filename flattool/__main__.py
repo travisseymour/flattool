@@ -175,7 +175,7 @@ def search(
             confirm = input(f"Install '{app_name}' ({app_id})? (y/n): ")
             if confirm.strip().lower().startswith("y"):
                 try:
-                    os.execvp("flatpak", ["flatpak", "install", app_id])
+                    os.execvp("flatpak", ["flatpak", "install", "-y", app_id])
                 except FileNotFoundError:
                     print("Error: flatpak command not found.")
                     sys.exit(1)

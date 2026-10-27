@@ -144,7 +144,7 @@ def run_uninstall(filter_term: str = "", assume_yes: bool = False):
             confirm = input(f"Uninstall '{app_name}' ({app_id})? (y/n): ")
             if confirm.strip().lower().startswith("y"):
                 try:
-                    os.execvp("flatpak", ["flatpak", "uninstall", app_id])
+                    os.execvp("flatpak", ["flatpak", "uninstall", "-y", app_id])
                 except FileNotFoundError:
                     print("Error: flatpak command not found.")
                     sys.exit(1)
