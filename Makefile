@@ -10,10 +10,10 @@ clean:
 
 # Format the code
 format:
-	ruff check flatsearch --fix
-	ruff format flatsearch
+	ruff check flattool --fix
+	ruff format flattool
 
 # Run code quality checks (used by CI)
 check:
-	ruff check flatsearch
-	ruff format --check flatsearch
+	ruff check flattool
+	ruff format --check flattool

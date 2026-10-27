@@ -30,8 +30,8 @@ from textual.app import App, ComposeResult
 from textual.widgets import Header, Footer, DataTable
 from textual.events import Key
 
-from flatsearch.version import get_version
-from flatsearch.uninstall import run_uninstall, run_list
+from flattool.version import get_version
+from flattool.uninstall import run_uninstall, run_list
 
 cli = typer.Typer(
     help="FlatSearch - Search and install/uninstall Flatpak applications via TUI.",

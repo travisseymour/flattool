@@ -26,7 +26,7 @@ from textual.app import App, ComposeResult
 from textual.widgets import Header, Footer, DataTable
 from textual.events import Key
 
-from flatsearch.version import get_version
+from flattool.version import get_version
 
 
 class FlatUninstallApp(App):

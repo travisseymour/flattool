@@ -23,6 +23,6 @@ from importlib.metadata import version
 
 def get_version() -> str:
     try:
-        return version("flatsearch")
+        return version("flattool")
     except importlib.metadata.PackageNotFoundError:
         return "???"

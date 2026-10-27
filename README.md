@@ -1,30 +1,30 @@
-# flatsearch
+# flattool
 
-[![Commit activity](https://img.shields.io/github/commit-activity/m/travisseymour/flatsearch)](https://img.shields.io/github/commit-activity/m/travisseymour/flatsearch)
-[![License](https://img.shields.io/github/license/travisseymour/flatsearch)](https://img.shields.io/github/license/travisseymour/flatsearch)
+[![Commit activity](https://img.shields.io/github/commit-activity/m/travisseymour/flattool)](https://img.shields.io/github/commit-activity/m/travisseymour/flattool)
+[![License](https://img.shields.io/github/license/travisseymour/flattool)](https://img.shields.io/github/license/travisseymour/flattool)
 
 A TUI tool for managing [Flatpak](https://flatpak.org/) applications. Search and install new apps, list and launch installed apps, or uninstall apps you no longer need. Use the arrow keys to navigate and press ENTER to act on your selection.
 
-- **Github repository**: <https://github.com/travisseymour/flatsearch/>
+- **Github repository**: <https://github.com/travisseymour/flattool/>
 
 ## Usage
 
 ### Search and Install
 
 ```
-flatsearch search [-y|--assumeyes] <search term>
+flattool search [-y|--assumeyes] <search term>
 ```
 
 Search for flatpak apps and optionally install a selected one.
 
 ```bash
-flatsearch search comic
+flattool search comic
 ```
 
 This will prompt you to verify before installing any app you choose.
 
 ```bash
-flatsearch search -y comic
+flattool search -y comic
 ```
 
 With `-y`, flatpak will start installing immediately without confirmation.
@@ -32,19 +32,19 @@ With `-y`, flatpak will start installing immediately without confirmation.
 ### List and Launch
 
 ```
-flatsearch list [filter term]
+flattool list [filter term]
 ```
 
 Display installed flatpak apps. Select one to launch it.
 
 ```bash
-flatsearch list
+flattool list
 ```
 
 Shows all installed flatpak apps in a table. Select one to launch.
 
 ```bash
-flatsearch list firefox
+flattool list firefox
 ```
 
 Filter the list to show only apps matching "firefox".
@@ -52,25 +52,25 @@ Filter the list to show only apps matching "firefox".
 ### Uninstall
 
 ```
-flatsearch uninstall [-y|--assumeyes] [filter term]
+flattool uninstall [-y|--assumeyes] [filter term]
 ```
 
 Display installed flatpak apps and uninstall a selected one.
 
 ```bash
-flatsearch uninstall
+flattool uninstall
 ```
 
 Shows all installed flatpak apps in a table. Select one to uninstall.
 
 ```bash
-flatsearch uninstall firefox
+flattool uninstall firefox
 ```
 
 Filter the list to show only apps matching "firefox".
 
 ```bash
-flatsearch uninstall -y firefox
+flattool uninstall -y firefox
 ```
 
 With `-y`, skip the confirmation prompt before uninstalling.
@@ -78,10 +78,10 @@ With `-y`, skip the confirmation prompt before uninstalling.
 ### Help
 
 ```bash
-flatsearch --help           # Show all commands
-flatsearch search --help    # Help for search command
-flatsearch list --help      # Help for list command
-flatsearch uninstall --help # Help for uninstall command
+flattool --help           # Show all commands
+flattool search --help    # Help for search command
+flattool list --help      # Help for list command
+flattool uninstall --help # Help for uninstall command
 ```
 
 <mark>NOTICE:</mark> This tool has only tested on Linux Mint (Debian/Ubuntu base) with the flatpak tool installed.
@@ -109,35 +109,35 @@ flatsearch uninstall --help # Help for uninstall command
 ### Installation
 
 ```bash
-uv tool install git+https://github.com/travisseymour/flatsearch.git
+uv tool install git+https://github.com/travisseymour/flattool.git
 ```
 
 or
 
 ```bash
-pipx install git+https://github.com/travisseymour/flatsearch.git
+pipx install git+https://github.com/travisseymour/flattool.git
 ```
 
 ### Upgrade
 
 ```bash
-uv tool upgrade flatsearch
+uv tool upgrade flattool
 ```
 
 or
 
 ```bash
-pipx upgrade flatsearch
+pipx upgrade flattool
 ```
 
 ### Removal
 
 ```bash
-uv tool uninstall flatsearch
+uv tool uninstall flattool
 ```
 
 or
 
 ```bash
-pipx uninstall flatsearch
+pipx uninstall flattool
 ```
